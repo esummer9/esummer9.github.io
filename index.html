@@ -1,1 +1,186 @@
-Hello esummer9.github.io
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile app preview</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // remove the custom style block (the one that contains ".promo") so Bootstrap styles apply
+    document.querySelectorAll('style').forEach(function(s){
+        if(s.textContent && s.textContent.indexOf('.promo') !== -1) s.remove();
+    });
+
+    // Map existing markup to Bootstrap utilities
+    var promo = document.querySelector('.promo');
+    if (promo) promo.classList.add('container', 'bg-white', 'rounded-4', 'p-3', 'd-flex', 'flex-wrap', 'align-items-center', 'gap-3', 'shadow');
+
+    var promoText = document.querySelector('.promo-text');
+    if (promoText) promoText.classList.add('flex-grow-1', 'me-3', 'min-vw-0');
+
+    document.querySelectorAll('.promo-ctas').forEach(function(el){
+        el.classList.add('d-flex', 'gap-2', 'align-items-center');
+    });
+
+    // Convert custom .btn/.ghost to Bootstrap button classes
+    document.querySelectorAll('.btn').forEach(function(b){
+        if (b.classList.contains('ghost')) {
+            b.classList.add('btn', 'btn-outline-secondary');
+            b.classList.remove('ghost');
+        } else {
+            b.classList.add('btn', 'btn-primary');
+        }
+    });
+
+    // Logos -> badges
+    document.querySelectorAll('.promo-logos .logo-pill').forEach(function(p){
+        p.classList.add('badge', 'bg-light', 'text-muted', 'rounded-pill', 'py-2', 'px-3');
+    });
+
+    // Mockups column adjustments
+    var mockups = document.querySelector('.mockups');
+    if (mockups) mockups.classList.add('position-relative', 'flex-shrink-0', 'ms-3');
+
+    // Phones keep their existing structure but get positioning helpers
+    document.querySelectorAll('.phone').forEach(function(ph){
+        ph.classList.add('position-absolute', 'overflow-hidden');
+    });
+});
+</script>
+<style>
+/* Mobile-promo: Notion-like mobile app showcase */
+.promo{
+    max-width:1100px;
+    margin:22px auto;
+    padding:20px;
+    display:flex;
+    gap:28px;
+    align-items:center;
+    background:linear-gradient(180deg,#ffffff,#fbfdff);
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(16,24,40,0.06);
+}
+
+/* left column: headline + ctas */
+.promo-text{flex:1;min-width:240px}
+.promo-text h2{margin:0 0 8px;font-size:26px;line-height:1.06}
+.promo-text p{margin:0 0 16px;color:var(--muted);font-size:15px}
+.promo-ctas{display:flex;gap:10px;align-items:center}
+.btn{
+    padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;border:0;
+    background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(112,72,232,0.18)
+}
+.btn.ghost{background:#f5f6f8;color:var(--muted);font-weight:600;border:1px solid #eef0f3}
+
+/* small logos row */
+.promo-logos{margin-top:16px;display:flex;gap:12px;align-items:center;color:var(--muted);font-size:13px}
+.logo-pill{background:#f6f7fb;padding:8px 10px;border-radius:8px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 0 rgba(9,10,12,0.03)}
+
+/* right column: stacked phone mockups */
+.mockups{width:380px;height:420px;position:relative;flex:0 0 380px}
+.phone{
+    position:absolute;
+    width:220px;height:420px;border-radius:36px;
+    background:linear-gradient(180deg,#fff,#fbfbff);
+    box-shadow:0 18px 40px rgba(20,24,40,0.12);
+    border:8px solid #f3f4f6;overflow:hidden;display:flex;align-items:center;justify-content:center;
+    transform-origin:center center;
+}
+
+/* stacked positions */
+.phone.center{left:80px;top:0;z-index:3;transform:rotate(0deg) scale(1)}
+.phone.left{left:10px;top:18px;z-index:2;transform:rotate(-12deg) scale(.95)}
+.phone.right{left:150px;top:28px;z-index:1;transform:rotate(10deg) scale(.92)}
+
+/* phone screen inner (simple svg fits to width) */
+.screen-svg{width:100%;height:100%;display:block}
+
+/* little notch for realism */
+.phone::before{
+    content:"";
+    position:absolute;
+    top:10px;left:50%;transform:translateX(-50%);
+    width:44px;height:6px;background:linear-gradient(90deg,#e9eaf0,#f6f7fb);
+    border-radius:6px;opacity:.9;
+}
+
+/* responsive: stack columns */
+@media (max-width:900px){
+    .promo{flex-direction:column;padding:16px}
+    .mockups{width:260px;height:320px;flex:0 0 auto}
+    .phone{width:170px;height:320px;border-radius:28px}
+    .phone.center{left:45px;top:0}
+    .phone.left{left:0;top:10px}
+    .phone.right{left:90px;top:22px}
+}
+</style>
+
+<section class="promo" aria-label="Mobile app preview">
+    <div class="promo-text">
+        <h2>Take your workspace everywhere</h2>
+        <p>Fast, focused mobile editing with blocks, rich content and collaboration — beautifully optimized for phones and small screens.</p>
+
+        <div class="promo-ctas">
+            <button class="btn" aria-label="Open on App Store">Download App</button>
+            <button class="btn ghost" aria-label="View features">View features</button>
+        </div>
+
+        <div class="promo-logos" aria-hidden="true">
+            <div class="logo-pill">Personal</div>
+            <div class="logo-pill">Team</div>
+            <div class="logo-pill">Enterprise</div>
+        </div>
+    </div>
+
+    <div class="mockups" role="img" aria-label="Mobile app screenshots">
+        <!-- Left phone: journal view -->
+        <div class="phone left" aria-hidden="true">
+            <svg class="screen-svg" viewBox="0 0 360 780" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="360" height="780" fill="#fff"/>
+                <rect x="16" y="28" rx="10" width="328" height="56" fill="#f5f7fb"/>
+                <rect x="28" y="110" rx="8" width="304" height="18" fill="#eef2ff"/>
+                <rect x="28" y="140" rx="8" width="240" height="18" fill="#f1f3f7"/>
+                <rect x="28" y="180" rx="8" width="300" height="12" fill="#f7f8fb"/>
+                <rect x="28" y="204" rx="8" width="300" height="12" fill="#f7f8fb"/>
+                <rect x="28" y="240" rx="8" width="140" height="12" fill="#f3f4f6"/>
+                <rect x="28" y="270" rx="10" width="300" height="120" fill="#fff" stroke="#eef2f7" />
+                <circle cx="48" cy="310" r="18" fill="#e6e7ea"/>
+                <rect x="76" y="294" rx="6" width="220" height="22" fill="#f4f6fa"/>
+            </svg>
+        </div>
+
+        <!-- Center phone: editor view -->
+        <div class="phone center" aria-hidden="true">
+            <svg class="screen-svg" viewBox="0 0 360 780" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <rect width="360" height="780" fill="#fff"/>
+                <rect x="16" y="20" rx="10" width="328" height="56" fill="#fff"/>
+                <rect x="28" y="100" rx="6" width="304" height="28" fill="#f8fafc"/>
+                <rect x="28" y="140" rx="4" width="304" height="180" fill="#fbfbfe"/>
+                <!-- blocks -->
+                <rect x="44" y="156" rx="6" width="260" height="18" fill="#eef2ff"/>
+                <rect x="44" y="184" rx="6" width="220" height="16" fill="#f3f4f6"/>
+                <rect x="44" y="208" rx="6" width="200" height="12" fill="#f7f8fb"/>
+                <rect x="44" y="234" rx="10" width="260" height="60" fill="#ffffff" stroke="#eef2f7"/>
+                <rect x="44" y="304" rx="6" width="160" height="12" fill="#f4f6fa"/>
+            </svg>
+        </div>
+
+        <!-- Right phone: board view -->
+        <div class="phone right" aria-hidden="true">
+            <svg class="screen-svg" viewBox="0 0 360 780" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <rect width="360" height="780" fill="#fff"/>
+                <rect x="16" y="26" rx="10" width="328" height="56" fill="#fff"/>
+                <!-- columns -->
+                <rect x="24" y="110" rx="10" width="152" height="540" fill="#fbfbfe" stroke="#f1f3f6"/>
+                <rect x="188" y="110" rx="10" width="152" height="540" fill="#fbfbfe" stroke="#f1f3f6"/>
+                <!-- cards -->
+                <rect x="36" y="132" rx="8" width="128" height="40" fill="#fff"/>
+                <rect x="36" y="184" rx="8" width="128" height="56" fill="#fff"/>
+                <rect x="200" y="140" rx="8" width="120" height="30" fill="#fff"/>
+                <rect x="200" y="184" rx="8" width="120" height="56" fill="#fff"/>
+            </svg>
+        </div>
+    </div>
+</section>
